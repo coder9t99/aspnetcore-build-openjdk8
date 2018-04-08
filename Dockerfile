@@ -8,9 +8,10 @@ RUN apt-get update && \
       ca-certificates-java && \
     apt-get clean;
 
-RUN apt-get clean && \
-    update-ca-certificates -f;
+RUN update-ca-certificates -f
 
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
+
+ADD lib/sonar-scanner-core/ /usr/local/lib/sonar-scanner-core/
 

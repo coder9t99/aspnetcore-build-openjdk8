@@ -1,0 +1,18 @@
+version: "2.0"
+
+services:
+  sonarscan:
+    image: aspnetcore-build-utils
+    volumes:
+      - ${SRC}:/app/src
+    working_dir: /app
+
+    # TODO: add tests
+    # TODO: add coverage (produce and collect opencover)
+    command: >
+      bash -c '
+      dotnet /usr/local/lib/sonar-scanner-core/SonarScanner.MSBuild.dll begin /k:"${PROJ_NAME}" /d:sonar.host.url="${SONAR_URL}" /d:sonar.login="${SONAR_LOGIN_TOKEN}" && 
+      dotnet build src/ &&
+      dotnet src/sonar-scanner-core/SonarScanner.MSBuild.dll end /d:sonar.login="${SONAR_LOGIN_TOKEN}"
+      '
+
